@@ -1,2 +1,3 @@
-This is Github Integration with Jira validation
-Also zappier PR Approval
+This is Github Integration with Jira validation <br />
+
+Also zappier PR Approval <br />
