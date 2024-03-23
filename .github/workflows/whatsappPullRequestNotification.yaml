@@ -1,0 +1,46 @@
+name: WhatsApp Notification on PR
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send WhatsApp message to Helbert
+      uses: twilio-labs/actions-sms@v1
+      with:
+        fromPhoneNumber: ${{ secrets.TWILIO_WHATSAPP_NUMBER }}
+        toPhoneNumber: ${{ secrets.HELBERT_WHATSAPP_NUMBER }}
+        message: "New Pull Request from: ${{ github.actor }} Approve now at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
+        TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
+    - name: Send WhatsApp message to Aranda
+      uses: twilio-labs/actions-sms@v1
+      with:
+        fromPhoneNumber: ${{ secrets.TWILIO_WHATSAPP_NUMBER }}
+        toPhoneNumber: ${{ secrets.ARANDA_WHATSAPP_NUMBER }}
+        message: "New Pull Request from: ${{ github.actor }} Approve now at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
+        TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
+    - name: Send WhatsApp message to Cotrina
+      uses: twilio-labs/actions-sms@v1
+      with:
+        fromPhoneNumber: ${{ secrets.TWILIO_WHATSAPP_NUMBER }}
+        toPhoneNumber: ${{ secrets.COTRINA_WHATSAPP_NUMBER }}
+        message: "New Pull Request from: ${{ github.actor }} Approve now at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
+        TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
+    - name: Send WhatsApp message to Erick
+      uses: twilio-labs/actions-sms@v1
+      with:
+        fromPhoneNumber: ${{ secrets.TWILIO_WHATSAPP_NUMBER }}
+        toPhoneNumber: ${{ secrets.ERICK_WHATSAPP_NUMBER }}
+        message: "New Pull Request from: ${{ github.actor }} Approve now at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
+        TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
