@@ -16,7 +16,7 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           args: >
-            New Pull Request from: ${{ github.actor }}
+            Hey @Approvers, New Pull Request from: ${{ github.actor }}
             Approve now at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
