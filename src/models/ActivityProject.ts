@@ -1,4 +1,5 @@
 export interface ActivityProject {
+    codigo: string;
     name: string;
     description: string;
     status: string;
