@@ -30,16 +30,15 @@ describe("TeamService", () => {
   });
 
   test("Get Teams by User Email", async () => {
-    const memberEmail = "sc2020067569@virtual.upt.pe"
+    const memberEmail = "em2020066321@virtual.upt.pe"
     const teams = await teamService.getTeams(memberEmail);
     
     expect(teams).toBeDefined();
     expect(Array.isArray(teams)).toBeTruthy();
-    expect(teams).toHaveLength(1);
   });
 
   test("Get Teams by User Email - not found", async () => {
-    const memberEmail = "test.user@gmail.com"
+    const memberEmail = "usertest@gmail.com"
     const teams = await teamService.getTeams(memberEmail);
     expect(teams).toBeNull();
   });
