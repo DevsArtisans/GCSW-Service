@@ -6,7 +6,7 @@
     "@types/bun": "latest"
   },
   "scripts": {
-    "start": "bun run index.ts",
+    "start": "bun run src/index.ts",
     "dev": "bun run src/index.ts --watch",
     "test": "bun test",
     "build": "bun build src/index.ts --outdir ./out "
