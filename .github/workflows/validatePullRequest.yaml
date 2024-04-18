@@ -20,6 +20,7 @@ jobs:
       run: bun install
     
     - name: Create a .env file
+      
       run: |
         echo "NEO4J_URI=neo4j://${{ secrets.NEO4J_URI }}:7687" >> .env
         echo "NEO4J_USER=${{ secrets.NEO4J_USER }}" >> .env
