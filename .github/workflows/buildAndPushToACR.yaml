@@ -5,8 +5,8 @@ on:
       - 'master'
     paths-ignore:
       - 'README.md'
-      - '**.png'
       - '.github/'
+      - 'test/'
 jobs:
   vars:
     runs-on: ubuntu-latest
