@@ -48,9 +48,7 @@ class MemberService {
     } catch (error) {
       console.error("Error retrieving member by email:", error);
       return null;
-    } finally {
-      await session.close();
-    }
+    } 
   }
 
   async getMembersByTeam(teamName: string): Promise<Member[] | null> {
