@@ -3,6 +3,7 @@ import MemberSchema from './MemberSchema';
 import TeamSchema from './TeamSchema';
 import ActivityImplementationSchema from './ActivityImplementationSchema';
 import MemberOfSchema from './MemberOfSchema';
+import ActivityProjectSchema from './ActivityProjectSchema';
 
 const schema = mergeSchemas({
     schemas: [
@@ -10,6 +11,7 @@ const schema = mergeSchemas({
         TeamSchema,
         ActivityImplementationSchema,
         MemberOfSchema,
+        ActivityProjectSchema
     ]
 });
 
