@@ -23,8 +23,6 @@ class TeamService {
     } catch (error) {
       console.error("Error creating team:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
   async getTeamByName(name: string): Promise<Team | null> {
@@ -43,8 +41,6 @@ class TeamService {
     } catch (error) {
       console.error("Error retrieving team by name:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
   async getTeams(memberEmail:string): Promise<Team[] | null> {
@@ -59,8 +55,6 @@ class TeamService {
     }catch(error){
       console.error("Error retrieving teams by user email:", error);
       return null;
-    }finally{
-      await session.close();
     }
   }
 }
