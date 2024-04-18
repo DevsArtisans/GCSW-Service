@@ -37,8 +37,6 @@ class ActivityImplementationService {
     } catch (error) {
       console.error("Error creating activity implementation:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
   async getActivityImplementationByName(
@@ -59,8 +57,6 @@ class ActivityImplementationService {
     } catch (error) {
       console.error("Error retrieving activity implementation by name:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -85,8 +81,6 @@ class ActivityImplementationService {
         error
       );
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -111,8 +105,6 @@ class ActivityImplementationService {
         error
       );
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -145,8 +137,6 @@ class ActivityImplementationService {
         error
       );
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -171,8 +161,6 @@ class ActivityImplementationService {
         error
       );
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -197,8 +185,6 @@ class ActivityImplementationService {
         error
       );
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -230,8 +216,6 @@ class ActivityImplementationService {
     } catch (error) {
       console.error("Error updating activity implementation:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -246,8 +230,6 @@ class ActivityImplementationService {
     } catch (error) {
       console.error("Error deleting activity implementation:", error);
       return false;
-    } finally {
-      await session.close();
     }
   }
 }

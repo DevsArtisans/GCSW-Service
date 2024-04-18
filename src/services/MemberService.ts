@@ -28,8 +28,6 @@ class MemberService {
     } catch (error) {
       console.error("Error creating member:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -69,8 +67,6 @@ class MemberService {
     } catch (error) {
       console.error("Error retrieving members by team name:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
 }

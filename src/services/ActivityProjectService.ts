@@ -7,12 +7,17 @@ class ActivityProjectService {
     const session = driver.session();
     try {
       const result = await session.run(
-        `CREATE (a:ActivityProject {
-          name: $name, description: $description, status: $status,
-          methodology: $methodology, creationDate: $creationDate,
-          startDate: $startDate, finalDate: $finalDate
-        }) RETURN a`,
+        `MERGE (a:ActivityProject {code: $code})
+        ON CREATE SET a.name = $name, 
+          a.description = $description, 
+          a.status = $status, 
+          a.methodology = $methodology, 
+          a.creationDate = $creationDate,
+          a.startDate = $startDate, 
+          a.finalDate = $finalDate
+        RETURN a`,
         {
+          code: activityProject.code,
           name: activityProject.name,
           description: activityProject.description,
           status: activityProject.status,
@@ -36,17 +41,15 @@ class ActivityProjectService {
     } catch (error) {
       console.error("Error creating activity project:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
 
-  async getActivityProjectByName(name: string): Promise<ActivityProject | null> {
+  async getActivityProjectByCode(code: string): Promise<ActivityProject | null> {
     const session = driver.session();
     try {
       const result = await session.run(
-        `MATCH (a:ActivityProject {name: $name}) RETURN a`,
-        { name }
+        `MATCH (a:ActivityProject {code: $code}) RETURN a`,
+        { code }
       );
       if (result.records.length === 0) return null;
 
@@ -55,10 +58,8 @@ class ActivityProjectService {
 
       return node.properties as ActivityProject;
     } catch (error) {
-      console.error("Error retrieving activity project by name:", error);
+      console.error("Error retrieving activity project by code:", error);
       return null;
-    } finally {
-      await session.close();
     }
   }
 
@@ -66,7 +67,7 @@ class ActivityProjectService {
     const session = driver.session();
     try {
       const result = await session.run(
-        `MATCH (m:Member {email: $memberEmail})-[:PARTICIPATES_IN]->(p:Project)-[:HAS_ACTIVITY_PROJECT]->(a:ActivityProject) RETURN a`,
+        `MATCH (m:Member {email: $memberEmail})-[:PARTICIPATES_IN]->(a:ActivityProject) RETURN a`,
         { memberEmail }
       );
 
@@ -74,9 +75,7 @@ class ActivityProjectService {
     } catch (error) {
       console.error("Error retrieving projects by member email:", error);
       return null;
-    } finally {
-      await session.close();
-    } 
+    }
   }
   
 }

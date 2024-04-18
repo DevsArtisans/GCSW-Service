@@ -18,8 +18,6 @@ class MemberOfService {
     } catch (error) {
       console.error("Error adding member to team:", error);
       return false;
-    } finally {
-      await session.close();
     }
   }
 
@@ -38,8 +36,6 @@ class MemberOfService {
     } catch (error) {
       console.error("Error removing member from team:", error);
       return false;
-    } finally {
-      await session.close();
     }
   }
 }
