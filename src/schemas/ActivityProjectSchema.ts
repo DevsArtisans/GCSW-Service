@@ -23,7 +23,8 @@ const ActivityProjectSchema = createSchema({
         }
 
         type Mutation{
-          createActivityProject(activityProject: ActivityProject!): ActivityProject
+          createActivityProject(code: String!,name: String!, description: String!, status: String!,  methodology:  String!, creationDate: String!, startDate: String!, finalDate: String!) : ActivityProject
+
         }
       `,
     resolvers: {
