@@ -18,7 +18,7 @@ const ActivityProjectSchema = createSchema({
         }
 
         type Query {
-            getActivityProjectByCode(name: String!): ActivityProject
+            getActivityProjectByCode(code: String!): ActivityProject
             getProjectsByMemberEmail(memberEmail: String!): [ActivityProject]
         }
 
@@ -28,7 +28,7 @@ const ActivityProjectSchema = createSchema({
       `,
     resolvers: {
         Query: {
-            getActivityProjectByName: async (_, { code }) => {
+            getActivityProjectByCode: async (_, { code }) => {
                 return await activityProjectService.getActivityProjectByCode(code);
             },
             getProjectsByMemberEmail: async (_, { memberEmail }) => {
