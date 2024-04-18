@@ -1,10 +1,10 @@
-name: Send Discord Pull Request Approval Notification
+name: Send Discord Pull Request Notification
 
 on:
   pull_request:
     types: [opened, reopened]
   pull_request_review:
-    types: [submitted,edited, dismissed]
+    types: [submitted, edited, dismissed]
   pull_request_review_comment:
     types: [created, deleted, edited]
 
@@ -12,11 +12,42 @@ jobs:
   send-discord-message:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Discord Message
+      - name: Send Discord Message on PR Open/Reopen
+        if: ${{ github.event_name == 'pull_request' }}
         uses: Ilshidur/action-discord@master
         with:
           args: >
             New Pull Request from: ${{ github.actor }}
             Approve now at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Send Discord Message on PR Review Submission
+        if: ${{ github.event_name == 'pull_request_review' && github.event.review.state == 'submitted' }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: >
+            Review submitted by: ${{ github.actor }}
+            Check review at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Send Discord Message on PR Approval
+        if: ${{ github.event_name == 'pull_request_review' && github.event.review.state == 'approved' }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: >
+            Pull Request approved by: ${{ github.actor }}
+            View PR at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Send Discord Message on PR Review Comment
+        if: ${{ github.event_name == 'pull_request_review_comment' }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: >
+            Comment on PR by: ${{ github.actor }}
+            See the comment at: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}/comments
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
