@@ -23,7 +23,7 @@ const ActivityProjectSchema = createSchema({
         }
 
         type Mutation{
-          createActivityProject(activityProject: ActivityProjectInput!): ActivityProject
+          createActivityProject(activityProject: ActivityProject!): ActivityProject
         }
       `,
     resolvers: {
