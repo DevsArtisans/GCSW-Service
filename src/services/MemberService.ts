@@ -2,18 +2,18 @@ import type { Member } from "../models/Member";
 import driver from "../config/Neo4j";
 
 class MemberService {
+  
   async createMember(member: Member): Promise<Member | null> {
-    const session = driver.session();
+    
     try {
-
+      const session = driver.session();
       const result = await session.run(
         `MERGE (m:Member {email: $email})
-        ON CREATE SET m.name = $name, m.role = $role
+        ON CREATE SET m.name = $name
         RETURN m`,
         {
           name: member.name,
           email: member.email,
-          role: member.role
         }
       );
 
