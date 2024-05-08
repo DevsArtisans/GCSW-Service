@@ -8,7 +8,6 @@ const MemberSchema = createSchema({
         type Member {
             name: String!
             email: String!
-            role: String!
         }
 
         type Query {
@@ -16,7 +15,7 @@ const MemberSchema = createSchema({
           getMembersByTeam(teamName: String!): [Member]
         }
         type Mutation{
-          createMember(name:String!,email: String!, role:String!): Member    
+          createMember(name:String!,email: String!): Member    
         }
       `,
   resolvers: {
@@ -30,7 +29,7 @@ const MemberSchema = createSchema({
     },
     Mutation: {
       createMember: async(_,{name,email,role}) =>{
-        return await memberService.createMember({name,email,role})
+        return await memberService.createMember({name,email})
       },
     }
   },
