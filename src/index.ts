@@ -9,6 +9,8 @@ const server = Bun.serve({
   fetch: ServerSchema,
 })
 
+
+
 console.info(
   `Server is running on ${new URL(
     ServerSchema.graphqlEndpoint,
