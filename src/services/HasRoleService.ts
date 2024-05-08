@@ -7,8 +7,8 @@ class HasRoleService {
     try {
       await session.run(
         `MATCH (m:Member {email: $memberEmail})
-            MATCH (t:Team {name: $teamName})
-            MERGE (m)-[:MEMBER_OF]->(t)`,
+            MATCH (r:Role {name: $role})
+            MERGE (m)-[:HAS_ROLE]->(r)`,
         {
           memberEmail,
           role,
@@ -16,25 +16,25 @@ class HasRoleService {
       );
       return true;
     } catch (error) {
-      console.error("Error adding member to team:", error);
+      console.error("Error adding role to member:", error);
       return false;
     }
   }
 
-  async removeMemberRole(memberEmail: string, teamName: string): Promise<boolean> {
+  async removeMemberRole(memberEmail: string, role: string): Promise<boolean> {
     const session = driver.session();
     try {
       await session.run(
-        `MATCH (m:Member {email: $memberEmail})-[r:MEMBER_OF]->(t:Team {name: $teamName})
-            DELETE r`,
+        `MATCH (m:Member {email: $memberEmail})-[hr:HAS_ROLE]->(r:Role {name: $role})
+            DELETE hr`,
         {
           memberEmail,
-          teamName,
+          role,
         },
       );
       return true;
     } catch (error) {
-      console.error("Error removing member from team:", error);
+      console.error("Error removing role from member:", error);
       return false;
     }
   }
