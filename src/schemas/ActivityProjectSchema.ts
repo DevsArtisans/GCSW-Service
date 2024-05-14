@@ -1,7 +1,8 @@
 import { createSchema } from "graphql-yoga";
 import ActivityProjectService from "../services/ActivityProjectService";
+import ParticipatesInService from "../services/ParticipatesInService";
 
-
+const participatesInService = new ParticipatesInService();
 const activityProjectService = new ActivityProjectService();
 
 const ActivityProjectSchema = createSchema({
@@ -23,7 +24,7 @@ const ActivityProjectSchema = createSchema({
         }
 
         type Mutation{
-          createActivityProject(code: String!,name: String!, description: String!, status: String!,  methodology:  String!, creationDate: String!, startDate: String!, finalDate: String!) : ActivityProject
+          createActivityProject(memberEmail: String!,code: String!,name: String!, description: String!, status: String!,  methodology:  String!, creationDate: String!, startDate: String!, finalDate: String!) : ActivityProject
 
         }
       `,
@@ -37,7 +38,8 @@ const ActivityProjectSchema = createSchema({
             },
         },
         Mutation: {
-            createActivityProject: async (_, { code, name, description, status, methodology, creationDate, startDate, finalDate }) => {
+            createActivityProject: async (_, {memberEmail, code, name, description, status, methodology, creationDate, startDate, finalDate }) => {
+                participatesInService.addMemberToProject(memberEmail, code);
                 return await activityProjectService.createActivityProject({ code, name, description, status, methodology, creationDate, startDate, finalDate });
             },
         },

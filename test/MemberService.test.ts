@@ -8,13 +8,11 @@ describe("MemberService", () => {
     const member: Member = {
       name: "Test User",
       email: "validate@gmail.com",
-      role: "Test",
     };
     const createdMember = await memberService.createMember(member);
     expect(createdMember).toBeDefined();
     expect(createdMember!.name).toBe(member.name);
     expect(createdMember!.email).toBe(member.email);
-    expect(createdMember!.role).toBe(member.role);
   });
 
   test("getMemberByEmail", async () => {

@@ -5,6 +5,19 @@ class MemberOfService {
   async addMemberToTeam(memberEmail: string, teamName: string): Promise<boolean> {
     const session = driver.session();
     try {
+      const memberResult = await session.run(
+        `MATCH (m:Member {email: $memberEmail})
+         RETURN m`,
+        { memberEmail }
+      );
+      const teamResult = await session.run(
+        `MATCH (t:Team {name: $teamName})
+         RETURN t`,
+        { teamName }
+      );
+      
+      if(memberResult.records.length === 0 || teamResult.records.length === 0) return false;
+
       await session.run(
         `MATCH (m:Member {email: $memberEmail})
             MATCH (t:Team {name: $teamName})
@@ -24,6 +37,17 @@ class MemberOfService {
   async removeMemberFromTeam(memberEmail: string, teamName: string): Promise<boolean> {
     const session = driver.session();
     try {
+      const memberResult = await session.run(
+        `MATCH (m:Member {email: $memberEmail})
+         RETURN m`,
+        { memberEmail }
+      );
+      const teamResult = await session.run(
+        `MATCH (t:Team {name: $teamName})
+         RETURN t`,
+        { teamName }
+      );
+      if(memberResult.records.length === 0 || teamResult.records.length === 0) return false;
       await session.run(
         `MATCH (m:Member {email: $memberEmail})-[r:MEMBER_OF]->(t:Team {name: $teamName})
             DELETE r`,
