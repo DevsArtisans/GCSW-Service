@@ -18,7 +18,7 @@ class ParticipatesInService {
       if (memberResult.records.length === 0 || projectResult.records.length === 0) return false;
       await session.run(
         `MATCH (m:Member {email: $memberEmail})
-            MATCH (ap:ActivityProject {codeProject: $codeProject})
+            MATCH (ap:ActivityProject {code: $codeProject})
             MERGE (m)-[:PARTICIPATES_IN]->(ap)`,
         {
           memberEmail,

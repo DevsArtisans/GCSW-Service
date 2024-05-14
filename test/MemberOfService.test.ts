@@ -19,8 +19,8 @@ describe("MemberOfService", () => {
   });
 
   test("Remove Member from Team", async () => {
-    const memberEmail = "da2019063853@virtual.upt.pe";
-    const teamName = "Equipo Dinamita 2";
+    const memberEmail = "sebastian@gmail.com";
+    const teamName = "PT-GCSW";
     const result = await memberOfService.removeMemberFromTeam(memberEmail, teamName);
     expect(result).toBeTruthy();
   });
