@@ -55,7 +55,10 @@ class MemberService {
     const session = driver.session();
     try {
       const result = await session.run(
-        `MATCH (members:Member)-[:MEMBER_OF]->(t:Team {name: $teamName}) RETURN members`,
+        `MATCH (members:Member)-[:MEMBER_OF]->(t:Team {name: $teamName})
+        OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
+        RETURN members, r
+        `,
         { teamName }
       );
 
