@@ -32,17 +32,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Docker Login
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.ACR_URL_DEV }}
-          username: ${{ secrets.ACR_USERNAME_DEV }}
-          password: ${{ secrets.ACR_PWD_DEV }}
-
       - name: Build Docker Image
         run: |
-          docker build -t  ${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }} -f ${{ needs.vars.outputs.dockerfile }} .
-          docker tag ${{ needs.vars.outputs.image-name }} registry.heroku.com/${{ needs.vars.outputs.app-name }}/web:${{ needs.vars.outputs.image-tag }}
+          docker build -t ${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }} -f ${{ needs.vars.outputs.dockerfile }} .
+          docker tag ${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }} registry.heroku.com/${{ needs.vars.outputs.app-name }}/web:${{ needs.vars.outputs.image-tag }}
 
       - name: Push Docker Image to Heroku Container Registry
         run: |
@@ -51,4 +44,4 @@ jobs:
 
       - name: Deploy to Heroku
         run: |
-          heroku container:release web --app ${{ needs.vars.outputs.app-name }}
+          heroku container:release web --app ${{ needs.vars.outputs.app-name }} --type web --arg WEB_IMAGE=${{ needs.vars.outputs.image-tag }}
