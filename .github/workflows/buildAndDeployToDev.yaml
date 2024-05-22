@@ -1,4 +1,5 @@
 name: Build and Push to ACR
+
 on:
   push:
     branches:
@@ -7,6 +8,7 @@ on:
       - 'README.md'
       - '.github/'
       - 'test/'
+
 jobs:
   vars:
     runs-on: ubuntu-latest
@@ -20,8 +22,8 @@ jobs:
       dockerfile: ./Dockerfile
       image-name: gcswdev/gcsw-app
       app-name: gcsw-app
-      image-tag: '${{ steps.shorten_sha.outputs.short_sha }}'
-    
+      image-tag: ${{ steps.shorten_sha.outputs.short_sha }}
+
   build:
     needs: vars
     name: 'Build and Push to ACR'
@@ -44,3 +46,24 @@ jobs:
           push: true
           tags: ${{ secrets.ACR_URL_DEV }}/${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }}
           file: ${{ needs.vars.outputs.dockerfile }}
+
+      - name: Checkout ARM Config Repo
+        uses: actions/checkout@v4
+        with:
+          repository: DevsArtisans/ARM-Config
+          path: ARM-Config
+
+      - name: Update Image Tag in deploy-dev.json
+        run: |
+          sed -i 's/"imageTag": "[^"]*"/"imageTag": "${{ needs.vars.outputs.image-tag }}"/' ARM-Config/deploy-dev.json
+
+      - name: Commit and Push Changes
+        run: |
+          cd ARM-Config
+          git config --global user.email "sebastiancotrina16@gmail.com"
+          git config --global user.name "SebastianCotrina16"
+          git add deploy-dev.json
+          git commit -m "Update image tag to ${{ needs.vars.outputs.image-tag }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
