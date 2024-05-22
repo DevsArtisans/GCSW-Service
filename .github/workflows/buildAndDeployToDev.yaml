@@ -1,12 +1,12 @@
-name: Build and Push to ACR
+name: Build and Deploy To Dev
 on:
   push:
     branches:
-      - 'master'
+      - "master"
     paths-ignore:
-      - 'README.md'
-      - '.github/'
-      - 'test/'
+      - "README.md"
+      - ".github/"
+      - "test/"
 jobs:
   vars:
     runs-on: ubuntu-latest
@@ -19,12 +19,12 @@ jobs:
     outputs:
       dockerfile: ./Dockerfile
       image-name: gcswdev/gcsw-app
-      app-name: gcsw-app
-      image-tag: '${{ steps.shorten_sha.outputs.short_sha }}'
-    
+      app-name: gcsw-dev
+      image-tag: "${{ steps.shorten_sha.outputs.short_sha }}"
+
   build:
     needs: vars
-    name: 'Build and Push to ACR'
+    name: "Build and Push to ACR"
     runs-on: ubuntu-latest
 
     steps:
@@ -44,3 +44,10 @@ jobs:
           push: true
           tags: ${{ secrets.ACR_URL_DEV }}/${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }}
           file: ${{ needs.vars.outputs.dockerfile }}
+
+      - name: Deploy to Heroku
+        uses: akshay2211/heroku-deploy@v3
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ needs.vars.outputs.app-name }}
+          docker_image_url: ${{ secrets.ACR_URL_DEV }}/${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }}
