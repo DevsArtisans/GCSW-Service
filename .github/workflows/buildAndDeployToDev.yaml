@@ -7,6 +7,7 @@ on:
       - "README.md"
       - ".github/"
       - "test/"
+
 jobs:
   vars:
     runs-on: ubuntu-latest
@@ -24,7 +25,7 @@ jobs:
 
   build:
     needs: vars
-    name: "Build and Push to ACR"
+    name: "Build and Push to Heroku"
     runs-on: ubuntu-latest
 
     steps:
@@ -38,16 +39,16 @@ jobs:
           username: ${{ secrets.ACR_USERNAME_DEV }}
           password: ${{ secrets.ACR_PWD_DEV }}
 
-      - name: Build and Push to ACR
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ${{ secrets.ACR_URL_DEV }}/${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }}
-          file: ${{ needs.vars.outputs.dockerfile }}
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.HEROKU_APP_NAME }} .
+          docker tag ${{ secrets.HEROKU_APP_NAME }} registry.heroku.com/${{ needs.vars.outputs.app-name }}/web:${{ needs.vars.outputs.image-tag }}
+
+      - name: Push Docker Image to Heroku Container Registry
+        run: |
+          heroku container:login
+          docker push registry.heroku.com/${{ needs.vars.outputs.app-name }}/web:${{ needs.vars.outputs.image-tag }}
 
       - name: Deploy to Heroku
-        uses: akshay2211/heroku-deploy@v3
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ needs.vars.outputs.app-name }}
-          docker_image_url: ${{ secrets.ACR_URL_DEV }}/${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }}
+        run: |
+          heroku container:release web --app ${{ needs.vars.outputs.app-name }}
