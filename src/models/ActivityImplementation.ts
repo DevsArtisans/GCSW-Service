@@ -1,4 +1,5 @@
 export interface ActivityImplementation {
+    code: string;
     name: string;
     description: string;
     status: string;
@@ -7,4 +8,3 @@ export interface ActivityImplementation {
     startDate: string;
     finalDate: string;
   }
-  

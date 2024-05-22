@@ -8,12 +8,12 @@ import HealthSchema from './HealthSchema';
 import RoleSchema from './RoleSchema';
 import HasRoleSchema from './HasRoleSchema';
 import ParticipatesInSchema from './ParticipatesInSchema';
-
+import IncludesSchema from './IncludesSchema';
 const schema = mergeSchemas({
     schemas: [
         MemberSchema,
         TeamSchema,
-  
+        IncludesSchema,
         ActivityImplementationSchema,
         MemberOfSchema,
         ActivityProjectSchema,
