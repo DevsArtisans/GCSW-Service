@@ -52,7 +52,7 @@ jobs:
         with:
           repository: DevsArtisans/ARM-Config
           ref: master
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPO_TOKEN }}
           path: ARM-Config
 
       - name: Update Image Tag in deploy-dev.json
@@ -68,5 +68,5 @@ jobs:
           git commit -m "Update image tag to ${{ needs.vars.outputs.image-tag }}"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
