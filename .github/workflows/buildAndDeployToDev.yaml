@@ -58,8 +58,8 @@ jobs:
       - name: Update Image Tag in deploy-dev.json
         run: |
           sed -i 's/"imageTag": "[^"]*"/"imageTag": "${{ needs.vars.outputs.image-tag }}"/' ARM-Config/deploy-dev.json
-          ls deploy-dev.json
-          cat deploy-dev.json
+          ls
+          cat ARM-Config/deploy-dev.json
       - name: Commit and Push Changes
         run: |
           cd ARM-Config
