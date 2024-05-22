@@ -48,7 +48,7 @@ class ParticipatesInService {
       await session.run(
         `MATCH (t:Team {name: $teamName})
               MATCH (ap:ActivityProject {code: $codeProject})
-              MERGE (m)-[:PARTICIPATES_IN]->(ap)`,
+              MERGE (t)-[:PARTICIPATES_IN]->(ap)`,
         {
           teamName,
           codeProject,

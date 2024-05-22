@@ -8,6 +8,7 @@ const MemberSchema = createSchema({
         type Member {
             name: String!
             email: String!
+            role: String!
         }
 
         type Query {

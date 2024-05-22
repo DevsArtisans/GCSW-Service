@@ -27,7 +27,7 @@ describe("ParticipatesInService", () => {
   });
 
   test("Add Team to Project", async () => {
-    const teamName = "Eskere";
+    const teamName = "PT-GCSW";
     const codeProject = "APP-1";
     const result = await participatesInService.addTeamToProject(teamName, codeProject);
     expect(result).toBe(true);
@@ -62,7 +62,7 @@ describe("ParticipatesInService", () => {
   });
 
   test("Remove Team from Project", async () => {
-    const teamName = "Eskere";
+    const teamName = "PT-GCSW";
     const codeProject = "APP-1";
     const result = await participatesInService.removeTeamFromProject(teamName, codeProject);
     expect(result).toBe(true);

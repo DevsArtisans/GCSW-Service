@@ -16,7 +16,7 @@ describe("MemberService", () => {
   });
 
   test("getMemberByEmail", async () => {
-    const email = "test.user@gmail.com";
+    const email = "validate@gmail.com";
     const member = await memberService.getMemberByEmail(email);
     expect(member).toBeDefined();
     expect(member!.email).toBe(email);
@@ -30,10 +30,10 @@ describe("MemberService", () => {
   });
 
   test("getMembersByTeam", async () => {
-    const teamName = "Equipo ABC";
+    const teamName = "PT-GCSW";
     const members = await memberService.getMembersByTeam(teamName);
     expect(members).toBeDefined();
     expect(Array.isArray(members)).toBeTruthy();
-    expect(members![0].name).toBe("Erick");
+    expect(members![0].name).toBe("Test User");
   });
 });
