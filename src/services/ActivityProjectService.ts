@@ -87,6 +87,28 @@ class ActivityProjectService {
       return null;
     }
   }
+
+  async getProjectsByTeamName(teamName: string): Promise<ActivityProject[] | null> {
+    const session = driver.session();
+    try {
+      const result = await session.run(
+        `MATCH (t:Team {name: $teamName})-[:PARTICIPATES_IN]->(a:ActivityProject) 
+         RETURN a`,
+        { teamName }
+      );
+
+      return result.records.map((record) => {
+        const projectNode = record.get(0).properties;
+
+        return {
+          ...projectNode,
+        } as ActivityProject;
+      });
+    } catch (error) {
+      console.error("Error retrieving projects by team name:", error);
+      return null;
+    }
+  }
 }
 
 
