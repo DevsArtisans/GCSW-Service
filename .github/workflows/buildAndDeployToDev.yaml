@@ -1,13 +1,12 @@
-name: Build and Deploy To Dev
+name: Build and Push to ACR
 on:
   push:
     branches:
-      - "master"
+      - 'master'
     paths-ignore:
-      - "README.md"
-      - ".github/"
-      - "test/"
-
+      - 'README.md'
+      - '.github/'
+      - 'test/'
 jobs:
   vars:
     runs-on: ubuntu-latest
@@ -20,25 +19,28 @@ jobs:
     outputs:
       dockerfile: ./Dockerfile
       image-name: gcswdev/gcsw-app
-      app-name: gcsw-dev
-      image-tag: "${{ steps.shorten_sha.outputs.short_sha }}"
-
+      app-name: gcsw-app
+      image-tag: '${{ steps.shorten_sha.outputs.short_sha }}'
+    
   build:
     needs: vars
-    name: "Build and Push to Heroku"
+    name: 'Build and Push to ACR'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build, Push and Release a Docker container to Heroku.
-        uses: gonuit/heroku-docker-deploy@v1.3.3
+      - name: Docker Login
+        uses: azure/docker-login@v1
         with:
-          email: "sebastiancotrina16@gmail.com"
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ needs.vars.outputs.app-name }}
-          dockerfile_directory: ./
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
+          login-server: ${{ secrets.ACR_URL_DEV }}
+          username: ${{ secrets.ACR_USERNAME_DEV }}
+          password: ${{ secrets.ACR_PWD_DEV }}
+
+      - name: Build and Push to ACR
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.ACR_URL_DEV }}/${{ needs.vars.outputs.image-name }}:${{ needs.vars.outputs.image-tag }}
+          file: ${{ needs.vars.outputs.dockerfile }}
