@@ -58,12 +58,13 @@ jobs:
       - name: Update Image Tag in deploy-dev.json
         run: |
           sed -i 's/"imageTag": "[^"]*"/"imageTag": "${{ needs.vars.outputs.image-tag }}"/' ARM-Config/deploy-dev.json
-
+          ls deploy-dev.json
+          cat deploy-dev.json
       - name: Commit and Push Changes
         run: |
           cd ARM-Config
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "sebastiancotrina16@gmail.com"
+          git config --global user.name "SebastianCotrina16"
           git add deploy-dev.json
           git commit -m "Update image tag to ${{ needs.vars.outputs.image-tag }}"
           git push
