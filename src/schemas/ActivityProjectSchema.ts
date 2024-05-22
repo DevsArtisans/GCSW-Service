@@ -22,6 +22,7 @@ const ActivityProjectSchema = createSchema({
         type Query {
             getActivityProjectByCode(code: String!): ActivityProject
             getProjectsByMemberEmail(memberEmail: String!): [ActivityProject]
+            getProjectsByTeamName(teamName: String!): [ActivityProject]
         }
 
         type Mutation{
@@ -36,6 +37,9 @@ const ActivityProjectSchema = createSchema({
             },
             getProjectsByMemberEmail: async (_, { memberEmail }) => {
                 return await activityProjectService.getProjectsByMemberEmail(memberEmail);
+            },
+            getProjectsByTeamName: async (_, { teamName }) => {
+                return await activityProjectService.getProjectsByTeamName(teamName);
             },
         },
         Mutation: {
