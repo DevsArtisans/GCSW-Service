@@ -2,18 +2,22 @@ import type { ActivityImplementation } from "../models/ActivityImplementation";
 import driver from "../config/Neo4j";
 
 class ActivityImplementationService {
-  async createActivityImplementation(
-    activityImplementation: ActivityImplementation
-  ): Promise<ActivityImplementation | null> {
+
+  async createActivityImplementation(activityImplementation: ActivityImplementation): Promise<ActivityImplementation | null> {
     const session = driver.session();
     try {
       const result = await session.run(
-        `CREATE (a:ActivityImplementation {
-            name: $name, description: $description, status: $status,
-            priority: $priority, creationDate: $creationDate,
-            startDate: $startDate, finalDate: $finalDate
-          }) RETURN a`,
+        `MERGE (ai:ActivityImplementation {code: $code})
+        ON CREATE SET ai.name = $name, 
+          ai.description = $description, 
+          ai.status = $status, 
+          ai.priority = $priority, 
+          ai.creationDate = $creationDate,
+          ai.startDate = $startDate, 
+          ai.finalDate = $finalDate
+        RETURN ai`,
         {
+          code: activityImplementation.code,
           name: activityImplementation.name,
           description: activityImplementation.description,
           status: activityImplementation.status,
@@ -39,14 +43,13 @@ class ActivityImplementationService {
       return null;
     }
   }
-  async getActivityImplementationByName(
-    name: string
-  ): Promise<ActivityImplementation | null> {
+
+  async getActivityImplementationByCode(code: string): Promise<ActivityImplementation | null> {
     const session = driver.session();
     try {
       const result = await session.run(
-        `MATCH (a:ActivityImplementation {name: $name}) RETURN a`,
-        { name }
+        `MATCH (ai:ActivityImplementation {code: $code}) RETURN ai`,
+        { code }
       );
       if (result.records.length === 0) return null;
 
@@ -55,181 +58,29 @@ class ActivityImplementationService {
 
       return node.properties as ActivityImplementation;
     } catch (error) {
-      console.error("Error retrieving activity implementation by name:", error);
+      console.error("Error retrieving activity implementation by code:", error);
       return null;
     }
   }
 
-  async getActivityImplementationByStatus(
-    status: string
-  ): Promise<ActivityImplementation | null> {
+  async getImplementationsByProjectCode(projectCode: string): Promise<ActivityImplementation[] | null> {
     const session = driver.session();
     try {
       const result = await session.run(
-        `MATCH (a:ActivityImplementation {status: $status}) RETURN a`,
-        { status }
+        `MATCH (ap:ActivityProject {code: $projectCode})-[:INCLUDES]->(ai:ActivityImplementation) 
+         RETURN ai`,
+        { projectCode }
       );
-      if (result.records.length === 0) return null;
-
-      const singleRecord = result.records[0];
-      const node = singleRecord.get(0);
-
-      return node.properties as ActivityImplementation;
-    } catch (error) {
-      console.error(
-        "Error retrieving activity implementation by status:",
-        error
-      );
-      return null;
-    }
-  }
-
-  async getActivityImplementationByPriority(
-    priority: string
-  ): Promise<ActivityImplementation | null> {
-    const session = driver.session();
-    try {
-      const result = await session.run(
-        `MATCH (a:ActivityImplementation {priority: $priority}) RETURN a`,
-        { priority }
-      );
-      if (result.records.length === 0) return null;
-
-      const singleRecord = result.records[0];
-      const node = singleRecord.get(0);
-
-      return node.properties as ActivityImplementation;
-    } catch (error) {
-      console.error(
-        "Error retrieving activity implementation by priority:",
-        error
-      );
-      return null;
-    }
-  }
-
-  async getActivityImplementationByCreationDate(
-    creationDate: string
-  ): Promise<ActivityImplementation[] | null> {
-    const session = driver.session();
-    try {
-      const startOfDay = creationDate;
-      const endOfDay = creationDate;
-
-      const result = await session.run(
-        `MATCH (a:ActivityImplementation)
-         WHERE a.creationDate >= $startOfDay AND a.creationDate <= $endOfDay
-         RETURN a`,
-        { startOfDay, endOfDay }
-      );
-
-      if (result.records.length === 0) return null;
-
+      
       return result.records.map((record) => {
-        const node = record.get("a").properties;
+        const implementationNode = record.get(0).properties;
         return {
-          ...node,
+          ...implementationNode,
         } as ActivityImplementation;
       });
     } catch (error) {
-      console.error(
-        "Error retrieving activity implementation by creation date:",
-        error
-      );
+      console.error("Error retrieving implementations by project code:", error);
       return null;
-    }
-  }
-
-  async getActivityImplementationByStartDate(
-    startDate: string
-  ): Promise<ActivityImplementation | null> {
-    const session = driver.session();
-    try {
-      const result = await session.run(
-        `MATCH (a:ActivityImplementation {startDate: $startDate}) RETURN a`,
-        { startDate }
-      );
-      if (result.records.length === 0) return null;
-
-      const singleRecord = result.records[0];
-      const node = singleRecord.get(0);
-
-      return node.properties as ActivityImplementation;
-    } catch (error) {
-      console.error(
-        "Error retrieving activity implementation by start date:",
-        error
-      );
-      return null;
-    }
-  }
-
-  async getActivityImplementationByFinalDate(
-    finalDate: string
-  ): Promise<ActivityImplementation | null> {
-    const session = driver.session();
-    try {
-      const result = await session.run(
-        `MATCH (a:ActivityImplementation {finalDate: $finalDate}) RETURN a`,
-        { finalDate }
-      );
-      if (result.records.length === 0) return null;
-
-      const singleRecord = result.records[0];
-      const node = singleRecord.get(0);
-
-      return node.properties as ActivityImplementation;
-    } catch (error) {
-      console.error(
-        "Error retrieving activity implementation by final date:",
-        error
-      );
-      return null;
-    }
-  }
-
-  async updateActivityImplementation(
-    name: string,
-    activityImplementation: ActivityImplementation
-  ): Promise<ActivityImplementation | null> {
-    const session = driver.session();
-    try {
-      const result = await session.run(
-        `MATCH (a:ActivityImplementation {name: $name})
-        SET a.description = $description, a.status = $status, a.priority = $priority, a.creationDate = $creationDate, a.startDate = $startDate, a.finalDate = $finalDate
-        RETURN a`,
-        {
-          name,
-          description: activityImplementation.description,
-          status: activityImplementation.status,
-          priority: activityImplementation.priority,
-          creationDate: activityImplementation.creationDate,
-          startDate: activityImplementation.startDate,
-          finalDate: activityImplementation.finalDate,
-        }
-      );
-      const singleRecord = result.records[0];
-      const node = singleRecord.get(0);
-      return {
-        ...node.properties,
-      } as ActivityImplementation;
-    } catch (error) {
-      console.error("Error updating activity implementation:", error);
-      return null;
-    }
-  }
-
-  async deleteActivityImplementation(name: string): Promise<boolean> {
-    const session = driver.session();
-    try {
-      await session.run(
-        `MATCH (a:ActivityImplementation {name: $name}) DETACH DELETE a`,
-        { name }
-      );
-      return true;
-    } catch (error) {
-      console.error("Error deleting activity implementation:", error);
-      return false;
     }
   }
 }
