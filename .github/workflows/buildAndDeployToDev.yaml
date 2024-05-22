@@ -55,9 +55,13 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
           path: ARM-Config
 
+      - name: Install jq
+        run: sudo apt-get install jq
+
       - name: Update Image Tag in deploy-dev.json
         run: |
-          sed -i "s/\"containerImageTag\": \"[^\"]*\"/\"containerImageTag\": \"${{ needs.vars.outputs.image-tag }}\"/" ARM-Config/deploy-dev.json
+          jq '.parameters.containerImageTag.defaultValue = "${{ needs.vars.outputs.image-tag }}"' ARM-Config/deploy-dev.json > ARM-Config/deploy-dev-updated.json
+          mv ARM-Config/deploy-dev-updated.json ARM-Config/deploy-dev.json
           cat ARM-Config/deploy-dev.json
       - name: Commit and Push Changes
         run: |
