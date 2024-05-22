@@ -16,6 +16,7 @@ const ActivityProjectSchema = createSchema({
             creationDate: String!
             startDate: String!
             finalDate: String!
+            teamName: String!
         }
 
         type Query {

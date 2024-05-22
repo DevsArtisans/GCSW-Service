@@ -67,17 +67,26 @@ class ActivityProjectService {
     const session = driver.session();
     try {
       const result = await session.run(
-        `MATCH (m:Member {email: $memberEmail})-[:PARTICIPATES_IN]->(a:ActivityProject) RETURN a`,
+        `MATCH (m:Member {email: $memberEmail})-[:PARTICIPATES_IN]->(a:ActivityProject) 
+         OPTIONAL MATCH (a)<-[:PARTICIPATES_IN]-(t:Team)
+         RETURN a, t`,
         { memberEmail }
       );
 
-      return result.records.map((record) => record.get(0).properties as ActivityProject);
+      return result.records.map((record) => {
+        const projectNode = record.get(0).properties;
+        const teamNode = record.get(1)?.properties || null;
+
+        return {
+          ...projectNode,
+          teamName: teamNode ? teamNode.name : null,
+        } as ActivityProject;
+      });
     } catch (error) {
       console.error("Error retrieving projects by member email:", error);
       return null;
     }
   }
-  
 }
 
 
