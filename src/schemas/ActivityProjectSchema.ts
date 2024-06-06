@@ -44,8 +44,10 @@ const ActivityProjectSchema = createSchema({
         },
         Mutation: {
             createActivityProject: async (_, {memberEmail, code, name, description, status, methodology, creationDate, startDate, finalDate }) => {
-                participatesInService.addMemberToProject(memberEmail, code);
-                return await activityProjectService.createActivityProject({ code, name, description, status, methodology, creationDate, startDate, finalDate });
+                
+                const response = await activityProjectService.createActivityProject({ code, name, description, status, methodology, creationDate, startDate, finalDate })
+                await participatesInService.addMemberToProject(memberEmail, code);;
+                return response;
             },
         },
     },
