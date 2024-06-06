@@ -1,10 +1,11 @@
 import { createSchema } from "graphql-yoga";
 import ActivityProjectService from "../services/ActivityProjectService";
 import ParticipatesInService from "../services/ParticipatesInService";
+import RoleService from "../services/RoleService";
 
 const participatesInService = new ParticipatesInService();
 const activityProjectService = new ActivityProjectService();
-
+const roleService = new RoleService();
 const ActivityProjectSchema = createSchema({
     typeDefs: /* GraphQL */ `
         type ActivityProject {
@@ -46,6 +47,7 @@ const ActivityProjectSchema = createSchema({
             createActivityProject: async (_, {memberEmail, code, name, description, status, methodology, creationDate, startDate, finalDate }) => {
                 
                 const response = await activityProjectService.createActivityProject({ code, name, description, status, methodology, creationDate, startDate, finalDate })
+                await roleService.createRole("Owner");
                 await participatesInService.addMemberToProject(memberEmail, code);;
                 return response;
             },
