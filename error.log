@@ -1,0 +1,34 @@
+$ bun run src/index.ts --watch
+Error retrieving member by email: 1 | "use strict";
+2 | /**
+3 |  * Copyright (c) "Neo4j"
+                             ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717648348181, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:3:26)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\MemberService.ts:37:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\services\MemberService.ts:34:26)
+      at F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:25:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:24:34)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at executeFields (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:260:28)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
