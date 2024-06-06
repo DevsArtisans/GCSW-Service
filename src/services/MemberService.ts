@@ -51,6 +51,26 @@ class MemberService {
     } 
   }
 
+  async getMembersByProject(codeProject: string): Promise<Member[] | null> {
+    const session = driver.session();
+    try{
+      const result = await session.run(
+        `MATCH (members:Member)-[:PARTICIPATES_IN]->(p:ActivityProject {code: $codeProject})
+        OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
+        RETURN members, r
+        `,
+        { codeProject }
+      );
+
+      if (result.records.length === 0) return null;
+
+      return result.records.map(record => record.get('members').properties as Member);
+    }catch(error){
+      console.error("Error retrieving members by project code:", error);
+      return null;
+    }
+  }
+
   async getMembersByTeam(teamName: string): Promise<Member[] | null> {
     const session = driver.session();
     try {
