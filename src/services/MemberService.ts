@@ -1,6 +1,7 @@
 import type { Member } from "../models/Member";
 import driver from "../config/Neo4j";
-
+import type { MemberWithRole } from "../models/MemberWithRole";
+import type { Role } from "../models/Role";
 class MemberService {
   
   async createMember(member: Member): Promise<Member | null> {
@@ -51,27 +52,36 @@ class MemberService {
     } 
   }
 
-  async getMembersByProject(codeProject: string): Promise<Member[] | null> {
+  async getMembersByProject(codeProject: string): Promise<MemberWithRole[] | null> {
     const session = driver.session();
-    try{
+    try {
       const result = await session.run(
         `MATCH (members:Member)-[:PARTICIPATES_IN]->(p:ActivityProject {code: $codeProject})
-        OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
-        RETURN members, r
-        `,
+         OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
+         RETURN members, r`,
         { codeProject }
       );
-
+  
       if (result.records.length === 0) return null;
+      const member = result.records.map(record => record.get('members').properties as Member);
+      const role = result.records.map(record => record.get('r').properties as Role);
 
-      return result.records.map(record => record.get('members').properties as Member);
-    }catch(error){
+      const membersWithRole = member.map((member, index) => {
+        return {
+          member,
+          role: role[index] || null
+        } as MemberWithRole;
+      });
+
+        
+      return membersWithRole;
+    } catch (error) {
       console.error("Error retrieving members by project code:", error);
       return null;
     }
   }
 
-  async getMembersByTeam(teamName: string): Promise<Member[] | null> {
+  async getMembersByTeam(teamName: string): Promise< Member[] | null> {
     const session = driver.session();
     try {
       const result = await session.run(

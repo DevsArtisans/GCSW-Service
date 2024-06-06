@@ -8,13 +8,19 @@ const MemberSchema = createSchema({
         type Member {
             name: String!
             email: String!
-            role: String!
+        }
+        type Role {
+            name: String!
+        }
+        type MemberWithRole {
+            member: Member
+            role: Role
         }
 
         type Query {
           getMemberByEmail(email: String!): Member
           getMembersByTeam(teamName: String!): [Member]
-          getMembersByProject(codeProject: String!): [Member]
+          getMembersByProject(codeProject: String!): [MemberWithRole]
         }
         type Mutation{
           createMember(name:String!,email: String!): Member    
