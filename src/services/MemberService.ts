@@ -57,10 +57,10 @@ class MemberService {
     try {
       const result = await session.run(
         `MATCH (p:ActivityProject {code: $codeProject})
-          MATCH (members:Member)-[:PARTICIPATES_IN]->(p)
-          OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
-          WHERE EXISTS { MATCH (p)-[:REQUIRES_ROLE]->(r) }
-          RETURN members, r
+        MATCH (members:Member)-[:PARTICIPATES_IN]->(p)
+        OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
+        WHERE EXISTS { MATCH (p)-[:REQUIRES_ROLE]->(r) }
+        RETURN members, r
           `,
         { codeProject }
       );
