@@ -17,6 +17,7 @@ const ParticipatesInSchema = createSchema({
     Mutation: {
       addMemberToProject: async (_, { memberEmail, codeProject , role}) => {
         await hasRoleService.addMemberRole(memberEmail,role);
+        await hasRoleService.addRoleToProject(codeProject,role);
         return await participatesInService.addMemberToProject(memberEmail, codeProject);
       },
       addTeamToProject: async (_, { teamName, codeProject }) => {
