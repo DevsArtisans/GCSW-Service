@@ -50,6 +50,7 @@ const ActivityProjectSchema = createSchema({
                 
                 const response = await activityProjectService.createActivityProject({ code, name, description, status, methodology, creationDate, startDate, finalDate })
                 await roleService.createRole("Owner");
+                await hasRoleService.addRoleToProject(code, "Owner");
                 await hasRoleService.addMemberRole(memberEmail, "Owner");
                 await participatesInService.addMemberToProject(memberEmail, code);
                 return response;
