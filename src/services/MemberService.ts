@@ -56,9 +56,12 @@ class MemberService {
     const session = driver.session();
     try {
       const result = await session.run(
-        `MATCH (members:Member)-[:PARTICIPATES_IN]->(p:ActivityProject {code: $codeProject})
-         OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
-         RETURN members, r`,
+        `MATCH (p:ActivityProject {code: $codeProject})
+          MATCH (members:Member)-[:PARTICIPATES_IN]->(p)
+          OPTIONAL MATCH (members)-[:HAS_ROLE]->(r:Role)
+          WHERE EXISTS { MATCH (p)-[:REQUIRES_ROLE]->(r) }
+          RETURN members, r
+          `,
         { codeProject }
       );
   
