@@ -5,6 +5,8 @@ class TeamService {
   async createTeam(team: Team): Promise<Team | null> {
     const session = driver.session();
     try {
+      const teamExists = await this.getTeamByName(team.name);
+      if (teamExists) return null;
       const result = await session.run(
         `MERGE (t:Team {name: $name})
         ON CREATE SET t.description = $description, t.leader = $leader
