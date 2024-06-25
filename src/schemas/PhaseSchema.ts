@@ -27,3 +27,4 @@ const PhaseSchema = createSchema({
 });
 
 export default PhaseSchema;
+
