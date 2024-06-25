@@ -5,12 +5,21 @@ const isAssignedToService = new IsAssignedToService();
 
 const IsAssignedToSchema = createSchema({
   typeDefs: /* GraphQL */ `
+
+        type Query{
+            getAssignedMembersToActivityImplementation(code: String!): [Member]
+        }
         type Mutation{
             assignMemberToActivityImplementation(memberEmail:String!,code: String!): Boolean
             removeMemberFromActivityImplementation(memberEmail:String!,code: String!): Boolean
         }
       `,
   resolvers: {
+    Query: {
+      getAssignedMembersToActivityImplementation: async (_, { code }) => {
+        return await isAssignedToService.getAssignedMembersByActivityImplementation(code);
+      },
+    },
     Mutation: {
       assignMemberToActivityImplementation: async (_, { memberEmail, code }) => {
         return await isAssignedToService.assignMemberToActivityImplementation(memberEmail, code);

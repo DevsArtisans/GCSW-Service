@@ -62,6 +62,35 @@ class IsAssignedToService {
       return false;
     }
   }
+
+  async getAssignedMembersByActivityImplementation(code: string): Promise<string[] | null> {
+    const session = driver.session();
+    try {
+
+      const activityResult = await session.run(
+        `MATCH (a:ActivityImplementation {code: $code})
+        RETURN a`,
+        { code }
+      );
+
+      if(activityResult.records.length === 0) return null;
+
+      const result = await session.run(
+        `MATCH (a:ActivityImplementation {code: $code})
+        MATCH (members:Member)-[:IS_ASSIGNED_TO]->(a)
+        RETURN members.email
+          `,
+        { code }
+      );
+  
+      if (result.records.length === 0) return null;
+      const members = result.records.map(record => record.get('members.email'));
+      return members;
+    } catch (error) {
+      console.error("Error retrieving members assigned to activity implementation:", error);
+      return null;
+    }
+  }
 }
 
 export default IsAssignedToService;
