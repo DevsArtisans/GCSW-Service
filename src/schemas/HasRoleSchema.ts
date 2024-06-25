@@ -8,6 +8,8 @@ const HasRoleSchema = createSchema({
     type Mutation {
       addMemberRole(memberEmail: String!, role: String!): Boolean
       removeMemberRole(memberEmail: String!, role: String!): Boolean
+      addRoleToProject(projectCode: String!, role: String!): Boolean
+      removeRoleFromProject(projectCode: String!, role: String!): Boolean
     }
   `,
   resolvers: {
@@ -17,6 +19,12 @@ const HasRoleSchema = createSchema({
       },
       removeMemberRole: async (_, { memberEmail, role }) => {
         return await hasRoleService.removeMemberRole(memberEmail, role);
+      },
+      addRoleToProject: async (_, { projectCode, role }) => {
+        return await hasRoleService.addRoleToProject(projectCode, role);
+      },
+      removeRoleFromProject: async (_, { projectCode, role }) => {
+        return await hasRoleService.removeRoleFromProject(projectCode, role);
       },
     },
   },

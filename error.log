@@ -1,0 +1,367 @@
+$ bun run src/index.ts --watch
+Error retrieving projects by member email: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717794233908, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\TeamService.ts:8:36
+      at createTeam (F:\noveno\latestGCSW\src\services\TeamService.ts:5:20)
+      at F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:35:44
+      at createTeam (F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:34:28)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at new ValueOrPromise (F:\noveno\latestGCSW\node_modules\value-or-promise\build\main\ValueOrPromise.js:14:21)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error retrieving teams by user email: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717794233908, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\TeamService.ts:8:36
+      at createTeam (F:\noveno\latestGCSW\src\services\TeamService.ts:5:20)
+      at F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:35:44
+      at createTeam (F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:34:28)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at new ValueOrPromise (F:\noveno\latestGCSW\node_modules\value-or-promise\build\main\ValueOrPromise.js:14:21)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error retrieving member by email: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717794233908, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\TeamService.ts:8:36
+      at createTeam (F:\noveno\latestGCSW\src\services\TeamService.ts:5:20)
+      at F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:35:44
+      at createTeam (F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:34:28)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at new ValueOrPromise (F:\noveno\latestGCSW\node_modules\value-or-promise\build\main\ValueOrPromise.js:14:21)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error retrieving projects by member email: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717794233908, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\TeamService.ts:8:36
+      at createTeam (F:\noveno\latestGCSW\src\services\TeamService.ts:5:20)
+      at F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:35:44
+      at createTeam (F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:34:28)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at new ValueOrPromise (F:\noveno\latestGCSW\node_modules\value-or-promise\build\main\ValueOrPromise.js:14:21)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error retrieving teams by user email: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717794233908, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\TeamService.ts:8:36
+      at createTeam (F:\noveno\latestGCSW\src\services\TeamService.ts:5:20)
+      at F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:35:44
+      at createTeam (F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:34:28)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at new ValueOrPromise (F:\noveno\latestGCSW\node_modules\value-or-promise\build\main\ValueOrPromise.js:14:21)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error creating team: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717794233908, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\TeamService.ts:8:36
+      at createTeam (F:\noveno\latestGCSW\src\services\TeamService.ts:5:20)
+      at F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:35:44
+      at createTeam (F:\noveno\latestGCSW\src\schemas\TeamSchema.ts:34:28)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at new ValueOrPromise (F:\noveno\latestGCSW\node_modules\value-or-promise\build\main\ValueOrPromise.js:14:21)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error retrieving member by email: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717794233908, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\MemberService.ts:38:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\services\MemberService.ts:35:26)
+      at F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:32:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:31:34)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at executeFields (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:260:28)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error retrieving members by team name: 1 | "use strict";
+2 | /**
+3 |  * Copyright (c) "Neo4j"
+                             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:3:26)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\MemberService.ts:87:36
+      at getMembersByTeam (F:\noveno\latestGCSW\src\services\MemberService.ts:84:26)
+      at F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:35:36
+      at getMembersByTeam (F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:34:34)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at executeFields (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:260:28)
+
+Error retrieving member by email: 1 | "use strict";
+2 | /**
+3 |  * Copyright (c) "Neo4j"
+                             ^
+Neo4jError: Could not perform discovery. No routing servers available. Known routing table: RoutingTable[database=default database, expirationTime=0, currentTime=1717796070349, routers=[], readers=[], writers=[]]
+ code: "ServiceUnavailable"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:3:26)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\MemberService.ts:38:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\services\MemberService.ts:35:26)
+      at F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:32:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:31:34)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at executeFields (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:260:28)
+
+70 |      */
+71 |     function Neo4jError(message, code, cause) {
+72 |         var _this =
+73 |         // eslint-disable-next-line
+74 |         // @ts-ignore: not available in ES6 yet
+75 |         _super.call(this, message, cause != null ? { cause: cause } : undefined) || this;
+             ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at new Neo4jError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:75:9)
+      at newError (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\error.js:111:12)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-bolt-connection\lib\channel\node\node-channel.js:244:27
+      at endReadableNT (node:stream:2419:53)
+
+Error retrieving member by email: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\MemberService.ts:38:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\services\MemberService.ts:35:26)
+      at F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:32:36
+      at getMemberByEmail (F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:31:34)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at executeFields (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:260:28)
+
+Error retrieving projects by team name: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\ActivityProjectService.ts:94:36
+      at getProjectsByTeamName (F:\noveno\latestGCSW\src\services\ActivityProjectService.ts:91:31)
+      at F:\noveno\latestGCSW\src\schemas\ActivityProjectSchema.ts:45:53
+      at getProjectsByTeamName (F:\noveno\latestGCSW\src\schemas\ActivityProjectSchema.ts:44:48)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at executeFields (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:260:28)
+
+Error retrieving members by team name: 615 |     };
+616 |     return Result;
+617 | }());
+618 | _a = Symbol.toStringTag;
+619 | function captureStacktrace() {
+620 |     var error = new Error('');
+                            ^
+Neo4jError: Connection was closed by server
+ code: "SessionExpired"
+
+      at captureStacktrace (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:620:23)
+      at new Result (F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\result.js:112:23)
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:215:29
+      at F:\noveno\latestGCSW\node_modules\neo4j-driver-core\lib\session.js:180:27
+      at F:\noveno\latestGCSW\src\services\MemberService.ts:87:36
+      at getMembersByTeam (F:\noveno\latestGCSW\src\services\MemberService.ts:84:26)
+      at F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:35:36
+      at getMembersByTeam (F:\noveno\latestGCSW\src\schemas\MemberSchema.ts:34:34)
+      at executeField (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:312:24)
+      at executeFields (F:\noveno\latestGCSW\node_modules\@graphql-tools\executor\esm\execution\execute.js:260:28)
+
