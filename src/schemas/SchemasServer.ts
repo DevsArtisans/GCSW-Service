@@ -9,6 +9,8 @@ import RoleSchema from './RoleSchema';
 import HasRoleSchema from './HasRoleSchema';
 import ParticipatesInSchema from './ParticipatesInSchema';
 import IncludesSchema from './IncludesSchema';
+import IsAssignedToSchema from './IsAssignedToSchema';
+import PhaseSchema from './PhaseSchema';
 const schema = mergeSchemas({
     schemas: [
         MemberSchema,
@@ -20,7 +22,9 @@ const schema = mergeSchemas({
         HealthSchema,
         RoleSchema,
         HasRoleSchema,
-        ParticipatesInSchema
+        ParticipatesInSchema,
+        IsAssignedToSchema,
+        PhaseSchema
     ]
 });
 
