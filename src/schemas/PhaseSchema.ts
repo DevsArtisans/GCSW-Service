@@ -3,7 +3,7 @@ import PhaseService from "../services/PhaseService";
 
 const phaseService = new PhaseService();
 
-const RoleSchema = createSchema({
+const PhaseSchema = createSchema({
   typeDefs: /* GraphQL */ `
     type Phase {
       name: String!
@@ -26,4 +26,4 @@ const RoleSchema = createSchema({
   },
 });
 
-export default RoleSchema;
+export default PhaseSchema;
