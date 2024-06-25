@@ -13,7 +13,7 @@ const PhaseSchema = createSchema({
     }
 
     type Mutation {
-       createPhase(name: string,description: string,startDate: string,finalDate: string) : Phase
+       createPhase(name: String,description: String,startDate: String,finalDate: String) : Phase
     }
 
   `,
