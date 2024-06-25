@@ -1,4 +1,5 @@
 import driver from "../config/Neo4j";
+import type { Member } from "../models/Member";
 
 class IsAssignedToService {
   async assignMemberToActivityImplementation(memberEmail: string, code: string): Promise<boolean> {
@@ -31,7 +32,7 @@ class IsAssignedToService {
     }
   }
 
-  async removeMemberFromActivityImplementation (memberEmail: string, code: string): Promise<boolean> {
+  async removeMemberFromActivityImplementation(memberEmail: string, code: string): Promise<boolean> {
     const session = driver.session();
     try {
       const memberResult = await session.run(
@@ -39,7 +40,7 @@ class IsAssignedToService {
          RETURN m`,
         { memberEmail }
       );
-      
+
       const activityResult = await session.run(
         `MATCH (a:ActivityImplementation {code: $code})
          RETURN a`,
@@ -47,15 +48,15 @@ class IsAssignedToService {
       );
 
       if (memberResult.records.length === 0 || activityResult.records.length === 0) return false;
-    
+
       await session.run(
         `MATCH (m:Member {email: $memberEmail})-[r:IS_ASSIGNED_TO]->(a:ActivityImplementation {code: $code})
           DELETE r`,
-          {
-            memberEmail,
-            code,
-          },
-      );    
+        {
+          memberEmail,
+          code,
+        },
+      );
       return true;
     } catch (error) {
       console.error("Error removing role from member:", error);
@@ -63,7 +64,7 @@ class IsAssignedToService {
     }
   }
 
-  async getAssignedMembersByActivityImplementation(code: string): Promise<string[] | null> {
+  async getAssignedMembersByActivityImplementation(code: string): Promise<Member[] | null> {
     const session = driver.session();
     try {
 
@@ -73,23 +74,19 @@ class IsAssignedToService {
         { code }
       );
 
-      if(activityResult.records.length === 0) return null;
+      if (activityResult.records.length === 0) return null;
 
       const result = await session.run(
-        `MATCH (a:ActivityImplementation {code: $code})
-        MATCH (members:Member)-[:IS_ASSIGNED_TO]->(a)
-        RETURN members.email
-          `,
+        `MATCH (m:Member)-[:IS_ASSIGNED_TO]->(a:ActivityImplementation {code: $code})
+        RETURN m`,
         { code }
       );
-  
-      if (result.records.length === 0) return null;
-      const members = result.records.map(record => record.get('members.email'));
-      return members;
+      return result.records.map(record => record.get("m").properties as Member);
     } catch (error) {
-      console.error("Error retrieving members assigned to activity implementation:", error);
+      console.error("Error getting members assigned to activity:", error);
       return null;
-    }
+    };
+
   }
 }
 

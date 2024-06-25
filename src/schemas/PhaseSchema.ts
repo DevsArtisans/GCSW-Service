@@ -13,11 +13,11 @@ const PhaseSchema = createSchema({
     }
 
     type Query {
-      getPhases(): [Phase]
+      getPhases: [Phase!]
     }
 
     type Mutation {
-       createPhase(name: String,description: String,startDate: String,finalDate: String) : Phase
+       createPhase(name: String,description: String,startDate: String,finalDate: String) : Phase!
     }
 
   `,
@@ -28,8 +28,8 @@ const PhaseSchema = createSchema({
       },
     },
     Mutation: {
-      createPhase: async (_, { name,description, startDate,finalDate }) => {
-        return await phaseService.createPhase(name,description,startDate,finalDate); 
+      createPhase: async (_, { name, description, startDate, finalDate }) => {
+        return await phaseService.createPhase(name, description, startDate, finalDate);
       },
     },
   },

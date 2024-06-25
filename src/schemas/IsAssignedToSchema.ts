@@ -1,22 +1,25 @@
-import { createSchema } from "graphql-yoga";
-import IsAssignedToService from "../services/IsAssignedToService";
+import { createSchema } from 'graphql-yoga';
+import IsAssignedToService from '../services/IsAssignedToService';
 
 const isAssignedToService = new IsAssignedToService();
 
 const IsAssignedToSchema = createSchema({
   typeDefs: /* GraphQL */ `
-
-        type Query{
-            getAssignedMembersToActivityImplementation(code: String!): [Member]
-        }
-        type Mutation{
-            assignMemberToActivityImplementation(memberEmail:String!,code: String!): Boolean
-            removeMemberFromActivityImplementation(memberEmail:String!,code: String!): Boolean
-        }
-      `,
+    type Member {
+      name: String!
+      email: String!
+    }
+    type Query {
+      getAssignedMembersByActivityImplementation(code: String!): [Member!]
+    }
+    type Mutation {
+      assignMemberToActivityImplementation(memberEmail: String!, code: String!): Boolean
+      removeMemberFromActivityImplementation(memberEmail: String!, code: String!): Boolean
+    }
+  `,
   resolvers: {
     Query: {
-      getAssignedMembersToActivityImplementation: async (_, { code }) => {
+      getAssignedMembersByActivityImplementation: async (_, { code }) => {
         return await isAssignedToService.getAssignedMembersByActivityImplementation(code);
       },
     },
@@ -26,9 +29,9 @@ const IsAssignedToSchema = createSchema({
       },
       removeMemberFromActivityImplementation: async (_, { memberEmail, code }) => {
         return await isAssignedToService.removeMemberFromActivityImplementation(memberEmail, code);
-
       },
     },
   },
 });
+
 export default IsAssignedToSchema;
