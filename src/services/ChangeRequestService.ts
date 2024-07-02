@@ -62,6 +62,20 @@ class ChangeRequestService {
         }
     }
 
+    async getChangeRequests() {
+        const session = driver.session();
+        try {
+            const result = await session.run(
+                `MATCH (cr:ChangeRequest)
+         RETURN cr`
+            );
+            return result.records.map(record => record.get('cr').properties);
+        } catch (error) {
+            console.error("Error fetching change requests:", error);
+            return null;
+        }
+    }
+
     async updateChangeRequest(code: string, date: string, objective: string, description: string, element: string, impact: string, effort: string, status: string, observation: string, projectManagerDate: string, implementationDate: string, versionDate: string, closeDate: string) {
         const session = driver.session();
         try {

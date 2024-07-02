@@ -23,6 +23,7 @@ const ChangeRequestSchema = createSchema({
 
     type Query {
       getChangeRequestByCode(code: String!): ChangeRequest
+      getChangeRequests: [ChangeRequest]
     }
 
     type Mutation {
@@ -64,6 +65,9 @@ const ChangeRequestSchema = createSchema({
     Query: {
       getChangeRequestByCode: async (_, { code }) => {
         return await changeRequestService.getChangeRequestByCode(code);
+      },
+      getChangeRequests: async () => {
+        return await changeRequestService.getChangeRequests();
       },
     },
     Mutation: {

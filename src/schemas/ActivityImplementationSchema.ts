@@ -33,6 +33,7 @@ const ActivityImplementationSchema = createSchema({
         startDate: String!,
         finalDate: String!
       ): ActivityImplementation
+      updateActivityImplementationStatus(code: String!, status: String!): ActivityImplementation
     }
   `,
   resolvers: {
@@ -47,6 +48,9 @@ const ActivityImplementationSchema = createSchema({
     Mutation: {
       createActivityImplementation: async (_, { code, name, description, status, priority, creationDate, startDate, finalDate }) => {
         return await activityImplementationService.createActivityImplementation({ code, name, description, status, priority, creationDate, startDate, finalDate });
+      },
+      updateActivityImplementationStatus: async (_, { code, status }) => {
+        return await activityImplementationService.updateActivityImplementationStatus(code, status);
       },
     },
   },
