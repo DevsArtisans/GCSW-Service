@@ -12,6 +12,7 @@ import IncludesSchema from './IncludesSchema';
 import IsAssignedToSchema from './IsAssignedToSchema';
 import PhaseSchema from './PhaseSchema';
 import ChangeRequestSchema from './ChangeRequestSchema';
+import HasRequestedSchema from './HasRequestedSchema';
 const schema = mergeSchemas({
     schemas: [
         MemberSchema,
@@ -26,7 +27,8 @@ const schema = mergeSchemas({
         ParticipatesInSchema,
         IsAssignedToSchema,
         PhaseSchema,
-        ChangeRequestSchema
+        ChangeRequestSchema,
+        HasRequestedSchema
     ]
 });
 
