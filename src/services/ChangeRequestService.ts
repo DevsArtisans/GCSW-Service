@@ -1,31 +1,45 @@
 import driver from "../config/Neo4j";
 
 class ChangeRequestService {
-    async addChangeRequest(data: string) {
+    async addChangeRequest(code: string, date: string, objective: string, description: string, element: string, impact: string, effort: string, status: string, observation: string, projectManagerDate: string, implementationDate: string, versionDate: string, closeDate: string) {
         const session = driver.session();
         try {
 
             await session.run(
-                 `
+                `
           MERGE (cr:ChangeRequest {code: $code})
-          ON CREATE SET cr += {
-          code: $code,
-          date: $date,
-          objective: $objective,
-          description: $description,
-          element: $element,
-          impact: $impact,
-          effort: $effort,
-          status: $status,
-          observation: $observation,
-          projectManagerDate: $projectManagerDate,
-          implementationDate: $implementationDate,
-          versionDate: $versionDate,
-          closeDate: $closeDate
-            }   
+          ON CREATE SET cr.code = $code,
+            cr.date = $date,
+            cr.objective = $objective,
+            cr.description = $description,
+            cr.element = $element,
+            cr.impact = $impact,
+            cr.effort = $effort,
+            cr.status = $status,
+            cr.observation = $observation,
+            cr.projectManagerDate = $projectManagerDate,
+            cr.implementationDate = $implementationDate,
+            cr.versionDate = $versionDate,
+            cr.closeDate = $closeDate
+            RETURN cr
         `,
-                data
+                {
+                    code,
+                    date,
+                    objective,
+                    description,
+                    element,
+                    impact,
+                    effort,
+                    status,
+                    observation,
+                    projectManagerDate,
+                    implementationDate,
+                    versionDate,
+                    closeDate
+                }
             );
+
             return true;
         } catch (error) {
             console.error("Error adding change request:", error);
@@ -48,7 +62,7 @@ class ChangeRequestService {
         }
     }
 
-    async updateChangeRequest(code: string, data: string) {
+    async updateChangeRequest(code: string, date: string, objective: string, description: string, element: string, impact: string, effort: string, status: string, observation: string, projectManagerDate: string, implementationDate: string, versionDate: string, closeDate: string) {
         const session = driver.session();
         try {
             const changeRequestExists = await this.getChangeRequestByCode(code);
@@ -56,7 +70,7 @@ class ChangeRequestService {
             await session.run(
                 `MATCH (cr:ChangeRequest {code: $code})
          SET cr += $data`,
-                { code, data }
+                { code, data: { date, objective, description, element, impact, effort, status, observation, projectManagerDate, implementationDate, versionDate, closeDate } }
             );
             return true;
         } catch (error) {
