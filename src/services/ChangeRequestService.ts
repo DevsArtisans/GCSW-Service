@@ -4,9 +4,11 @@ class ChangeRequestService {
     async addChangeRequest(data: string) {
         const session = driver.session();
         try {
-            
+
             await session.run(
-                `CREATE (cr:ChangeRequest {
+                 `
+          MERGE (cr:ChangeRequest {code: $code})
+          ON CREATE SET cr += {
           code: $code,
           date: $date,
           objective: $objective,
@@ -20,7 +22,8 @@ class ChangeRequestService {
           implementationDate: $implementationDate,
           versionDate: $versionDate,
           closeDate: $closeDate
-        })`,
+            }   
+        `,
                 data
             );
             return true;
@@ -48,6 +51,8 @@ class ChangeRequestService {
     async updateChangeRequest(code: string, data: string) {
         const session = driver.session();
         try {
+            const changeRequestExists = await this.getChangeRequestByCode(code);
+            if (!changeRequestExists) return false;
             await session.run(
                 `MATCH (cr:ChangeRequest {code: $code})
          SET cr += $data`,
