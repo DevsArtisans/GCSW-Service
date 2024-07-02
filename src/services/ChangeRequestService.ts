@@ -62,12 +62,13 @@ class ChangeRequestService {
         }
     }
 
-    async getChangeRequests() {
+    async getChangeRequestsByProject(code: string) {
         const session = driver.session();
         try {
             const result = await session.run(
-                `MATCH (cr:ChangeRequest)
-         RETURN cr`
+                `MATCH (p:ActivityProject {code: $code})-[:HAS_REQUESTED]->(cr:ChangeRequest)
+            RETURN cr`,
+                    { code }
             );
             return result.records.map(record => record.get('cr').properties);
         } catch (error) {
