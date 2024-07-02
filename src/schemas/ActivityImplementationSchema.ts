@@ -16,6 +16,7 @@ const ActivityImplementationSchema = createSchema({
       finalDate: String!
     }
 
+
     type Query {
       getActivityImplementationByCode(code: String!): ActivityImplementation
       getImplementationsByProjectCode(projectCode: String!): [ActivityImplementation]

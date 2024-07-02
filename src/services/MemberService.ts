@@ -31,6 +31,28 @@ class MemberService {
       return null;
     }
   }
+  async getMembersAssignedToImplementation(implementationCode: string): Promise<Member[] | null> {
+    const session = driver.session();
+    try {
+      const result = await session.run(
+        `MATCH (ai:ActivityImplementation {code: $implementationCode})<-[:IS_ASSIGNED_TO]-(m:Member) 
+         RETURN m`,
+        { implementationCode }
+      );
+
+      return result.records.map((record) => {
+        const memberNode = record.get(0).properties;
+        return {
+          ...memberNode,
+        } as Member;
+      });
+
+    } catch (error) {
+      console.error("Error retrieving members assigned to implementation:", error);
+      return null
+    }
+  }
+
 
   async getMemberByEmail(email: string): Promise<Member | null> {
     const session = driver.session();

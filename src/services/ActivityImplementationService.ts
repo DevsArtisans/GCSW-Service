@@ -1,5 +1,6 @@
 import type { ActivityImplementation } from "../models/ActivityImplementation";
 import driver from "../config/Neo4j";
+import type { Member } from "../models/Member";
 
 class ActivityImplementationService {
 
@@ -71,7 +72,7 @@ class ActivityImplementationService {
          RETURN ai`,
         { projectCode }
       );
-      
+
       return result.records.map((record) => {
         const implementationNode = record.get(0).properties;
         return {
@@ -92,7 +93,7 @@ class ActivityImplementationService {
          RETURN ai`,
         { phaseName }
       );
-      
+
       return result.records.map((record) => {
         const implementationNode = record.get(0).properties;
         return {

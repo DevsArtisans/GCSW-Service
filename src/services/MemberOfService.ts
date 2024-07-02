@@ -33,7 +33,6 @@ class MemberOfService {
       return false;
     }
   }
-
   async removeMemberFromTeam(memberEmail: string, teamName: string): Promise<boolean> {
     const session = driver.session();
     try {
