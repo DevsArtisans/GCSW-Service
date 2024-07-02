@@ -83,6 +83,27 @@ class ActivityImplementationService {
       return null;
     }
   }
+
+  async getActivityImplementationsByPhase(phaseName: string): Promise<ActivityImplementation[] | null> {
+    const session = driver.session();
+    try {
+      const result = await session.run(
+        `MATCH (p:Phase {name: $phaseName})-[:INCLUDES]->(ai:ActivityImplementation) 
+         RETURN ai`,
+        { phaseName }
+      );
+      
+      return result.records.map((record) => {
+        const implementationNode = record.get(0).properties;
+        return {
+          ...implementationNode,
+        } as ActivityImplementation;
+      });
+    } catch (error) {
+      console.error("Error retrieving implementations by phase:", error);
+      return null;
+    }
+  }
 }
 
 export default ActivityImplementationService;

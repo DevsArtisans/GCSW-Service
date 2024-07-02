@@ -25,5 +25,21 @@ class PhaseService{
             return null;
         }
     }
+
+    async getPhases() {
+        try{
+            const session = driver.session();
+            const result = await session.run("MATCH(p:Phase) RETURN p");
+            return result.records.map(record => {
+                const node = record.get(0);
+                return {
+                    ...node.properties
+                } as Phase;
+            });
+        }catch(error){
+            console.error("Error getting phases", error);
+            return null;
+        }
+    }
 }
 export default PhaseService;
