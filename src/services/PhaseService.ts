@@ -46,13 +46,14 @@ class PhaseService {
         }
     }
 
-    async getActivityImplementationInAllPhases(): Promise<PhasesWithActivityImplementations | null> {
+    async getActivityImplementationInAllPhasesByProject(code: string): Promise<PhasesWithActivityImplementations | null> {
         const session = driver.session();
         try {
             const result = await session.run(
-                `MATCH (ai:ActivityImplementation)-[:IS_ASSIGNED_TO]->(p:Phase)
-         RETURN p, ai`
-            );
+
+                `MATCH (ai:ActivityImplementation)-[:IS_ASSIGNED_TO]->(p:Phase)<-[:HAS_PHASE]-(pr:ActivityProject {code: $code})
+         RETURN p, ai`,
+                { code });
 
             if (result.records.length === 0) return null;
 
