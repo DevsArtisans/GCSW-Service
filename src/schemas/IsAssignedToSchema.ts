@@ -15,6 +15,7 @@ const IsAssignedToSchema = createSchema({
     type Mutation {
       assignMemberToActivityImplementation(memberEmail: String!, code: String!): Boolean
       removeMemberFromActivityImplementation(memberEmail: String!, code: String!): Boolean
+      addActivityToPhase(activityCode: String!, phaseName: String!): Boolean
     }
   `,
   resolvers: {
@@ -29,6 +30,9 @@ const IsAssignedToSchema = createSchema({
       },
       removeMemberFromActivityImplementation: async (_, { memberEmail, code }) => {
         return await isAssignedToService.removeMemberFromActivityImplementation(memberEmail, code);
+      },
+      addActivityToPhase: async (_, { activityCode, phaseName }) => {
+        return await isAssignedToService.addActivityToPhase(activityCode, phaseName);
       },
     },
   },

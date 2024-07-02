@@ -32,6 +32,37 @@ class IsAssignedToService {
     }
   }
 
+  async addActivityToPhase(activityCode: string, phaseName: string): Promise<boolean> {
+    const session = driver.session();
+    try {
+      const activityResult = await session.run(
+        `MATCH (a:ActivityImplementation {code: $activityCode})
+         RETURN a`,
+        { activityCode }
+      );
+      const phaseResult = await session.run(
+        `MATCH (p:Phase {name: $phaseName})
+         RETURN p`,
+        { phaseName }
+      );
+      if (activityResult.records.length === 0 || phaseResult.records.length === 0) return false;
+      await session.run(
+        `MATCH (a:ActivityImplementation {code: $activityCode})
+         MATCH (p:Phase {name: $phaseName})
+         MERGE (a)-[:IS_ASSIGNED_TO]->(p)`,
+        {
+          activityCode,
+          phaseName,
+        },
+      );
+      return true;
+    } catch (error) {
+      console.error("Error assigning activity to phase:", error);
+      return false;
+    }
+  
+  }
+
   async removeMemberFromActivityImplementation(memberEmail: string, code: string): Promise<boolean> {
     const session = driver.session();
     try {
