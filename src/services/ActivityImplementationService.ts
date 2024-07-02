@@ -105,6 +105,24 @@ class ActivityImplementationService {
       return null;
     }
   }
+
+  async updateActivityImplementationStatus(code: string, status: string): Promise<boolean> {
+    const session = driver.session();
+    try {
+      const implementationExists = await this.getActivityImplementationByCode(code);
+      if (!implementationExists) return false;
+      await session.run(
+        `MATCH (ai:ActivityImplementation {code: $code})
+         SET ai.status = $status
+         RETURN ai`,
+        { code, status }
+      );
+      return true;
+    } catch (error) {
+      console.error("Error updating activity implementation status:", error);
+      return false;
+    }
+  }
 }
 
 export default ActivityImplementationService;
