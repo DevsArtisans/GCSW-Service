@@ -3,7 +3,7 @@ import HasPhaseService from "../services/HasPhaseService";
 
 const hasPhaseService = new HasPhaseService();
 
-const HasRequestedSchema = createSchema({
+const HasPhaseSchema = createSchema({
   typeDefs: /* GraphQL */ `
     type Mutation {
       addPhaseToProject(name: String!, code: String!): Boolean
@@ -18,4 +18,4 @@ const HasRequestedSchema = createSchema({
   },
 });
 
-export default HasRequestedSchema;
+export default HasPhaseSchema;

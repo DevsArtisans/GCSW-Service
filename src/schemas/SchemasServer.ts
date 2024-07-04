@@ -1,18 +1,19 @@
 import { mergeSchemas } from 'graphql-yoga';
-import MemberSchema from './MemberSchema';
-import TeamSchema from './TeamSchema';
 import ActivityImplementationSchema from './ActivityImplementationSchema';
-import MemberOfSchema from './MemberOfSchema';
 import ActivityProjectSchema from './ActivityProjectSchema';
-import HealthSchema from './HealthSchema';
-import RoleSchema from './RoleSchema';
+import ChangeRequestSchema from './ChangeRequestSchema';
+import HasPhaseSchema from './HasPhaseSchemas';
+import HasRequestedSchema from './HasRequestedSchema';
 import HasRoleSchema from './HasRoleSchema';
-import ParticipatesInSchema from './ParticipatesInSchema';
+import HealthSchema from './HealthSchema';
 import IncludesSchema from './IncludesSchema';
 import IsAssignedToSchema from './IsAssignedToSchema';
+import MemberOfSchema from './MemberOfSchema';
+import MemberSchema from './MemberSchema';
+import ParticipatesInSchema from './ParticipatesInSchema';
 import PhaseSchema from './PhaseSchema';
-import ChangeRequestSchema from './ChangeRequestSchema';
-import HasRequestedSchema from './HasRequestedSchema';
+import RoleSchema from './RoleSchema';
+import TeamSchema from './TeamSchema';
 const schema = mergeSchemas({
     schemas: [
         MemberSchema,
@@ -28,7 +29,8 @@ const schema = mergeSchemas({
         IsAssignedToSchema,
         PhaseSchema,
         ChangeRequestSchema,
-        HasRequestedSchema
+        HasRequestedSchema,
+        HasPhaseSchema
     ]
 });
 

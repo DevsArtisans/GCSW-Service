@@ -26,7 +26,7 @@ const PhaseSchema = createSchema({
     type Query {
       getPhases: [Phase!]
       getActivityImplementationByPhase(phaseName: String!): [ActivityImplementation!]
-      getActivityImplementationInAllPhases: PhasesWithActivityImplementations
+      getActivityImplementationInAllPhases(code: String!): PhasesWithActivityImplementations
     }
 
     type Mutation {
@@ -41,8 +41,8 @@ const PhaseSchema = createSchema({
       getActivityImplementationByPhase: async (_, { phaseName }) => {
         return await phaseService.getActivityImplementationByPhase(phaseName);
       },
-      getActivityImplementationInAllPhases: async () => {
-        return await phaseService.getActivityImplementationInAllPhases();
+      getActivityImplementationInAllPhases: async (_,{code}) => {
+        return await phaseService.getActivityImplementationInAllPhasesByProject(code);
       },
     },
     Mutation: {
