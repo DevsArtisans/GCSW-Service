@@ -1,6 +1,6 @@
 import driver from "../config/Neo4j";
-import type { Phase } from "../models/Phase";
 import type { ActivityImplementation } from "../models/ActivityImplementation";
+import type { Phase } from "../models/Phase";
 import type { PhaseProv, PhasesWithActivityImplementations } from "../models/PhasesWithActivityImplementation";
 
 class PhaseService {
@@ -50,32 +50,41 @@ class PhaseService {
         const session = driver.session();
         try {
             const result = await session.run(
-
-                `MATCH (ai:ActivityImplementation)-[:IS_ASSIGNED_TO]->(p:Phase)<-[:HAS_PHASE]-(pr:ActivityProject {code: $code})
-         RETURN p, ai`,
-                { code });
+                `MATCH (pr:ActivityProject {code: $code})-[:HAS_PHASE]->(p:Phase)
+                 OPTIONAL MATCH (p)<-[:IS_ASSIGNED_TO]-(ai:ActivityImplementation)
+                 RETURN p, collect(ai) AS activityImplementations`,
+                { code }
+            );
 
             if (result.records.length === 0) return null;
 
-            const phases = result.records.map(record => record.get('p').properties as Phase);
-
-            let phasesWithActivityImplementations: PhasesWithActivityImplementations = {
+            const phasesWithActivityImplementations: PhasesWithActivityImplementations = {
                 phase: []
             };
-            for (let i = 0; i < phases.length; i++) {
-                const phaseProv = phases[i] as PhaseProv;
 
-                const activityImplementation = await this.getActivityImplementationByPhase(phases[i].name);
-                phaseProv.activityImplementations = activityImplementation;
+            for (const record of result.records) {
+                const phaseNode = record.get('p');
+                const activityImplementations = record.get('activityImplementations');
+
+                const phaseProv: PhaseProv = {
+                    name: phaseNode.properties.name,
+                    description: phaseNode.properties.description,
+                    startDate: phaseNode.properties.startDate,
+                    finalDate: phaseNode.properties.finalDate,
+                    activityImplementations: activityImplementations.map((ai: any) => ai ? ai.properties as ActivityImplementation : null).filter(ai => ai !== null)
+                };
+
                 phasesWithActivityImplementations.phase.push(phaseProv);
             }
+
             return phasesWithActivityImplementations;
         } catch (error) {
             console.error("Error fetching activity implementation in all phases:", error);
             return null;
+        } finally {
+            await session.close();
         }
     }
-
     async getPhases(): Promise<Phase[] | null> {
         try {
             const session = driver.session();

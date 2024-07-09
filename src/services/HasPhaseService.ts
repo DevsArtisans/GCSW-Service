@@ -11,14 +11,14 @@ class HasPhaseService {
                 { phaseName }
             );
             const projectResult = await session.run(
-                `MATCH (pr:Project {code: $projectCode})
+                `MATCH (pr:ActivityProject {code: $projectCode})
                  RETURN pr`,
                 { projectCode }
             );
             if(phaseResult.records.length === 0 || projectResult.records.length === 0) return false;
             await session.run(
                 `MATCH (p:Phase {name: $phaseName})
-                 MATCH (pr:Project {code: $projectCode})
+                 MATCH (pr:ActivityProject {code: $projectCode})
                  MERGE (p)<-[:HAS_PHASE]-(pr)`,
                 {
                     phaseName,
