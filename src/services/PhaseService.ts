@@ -34,9 +34,9 @@ class PhaseService {
                  RETURN ai`,
                 { phaseName, code }
             );
-    
+
             if (result.records.length === 0) return null;
-    
+
             return result.records.map(record => record.get(0).properties as ActivityImplementation);
         } catch (error) {
             console.error("Error fetching activity implementation by phase and project:", error);
@@ -45,19 +45,21 @@ class PhaseService {
             await session.close();
         }
     }
-    
-    async getPhases(): Promise<Phase[] | null> {
+
+    async getPhasesByProject(code: string): Promise<Phase[] | null> {
+        const session = driver.session();
         try {
-            const session = driver.session();
-            const result = await session.run("MATCH (p:Phase) RETURN p");
-            return result.records.map(record => {
-                const node = record.get(0);
-                return {
-                    ...node.properties
-                } as Phase;
-            });
+            const result = await session.run(
+                `MATCH (pr:ActivityProject {code: $code})-[:HAS_PHASE]->(p:Phase)
+                 RETURN p`,
+                { code }
+            );
+
+            if (result.records.length === 0) return null;
+
+            return result.records.map(record => record.get(0).properties as Phase);
         } catch (error) {
-            console.error("Error getting phases:", error);
+            console.error("Error fetching phases by project:", error);
             return null;
         }
     }

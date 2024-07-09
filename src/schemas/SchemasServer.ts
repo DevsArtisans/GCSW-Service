@@ -8,6 +8,7 @@ import HasRoleSchema from './HasRoleSchema';
 import HealthSchema from './HealthSchema';
 import IncludesSchema from './IncludesSchema';
 import IsAssignedToSchema from './IsAssignedToSchema';
+import IsRelatedSchema from './IsRelatedSchema';
 import MemberOfSchema from './MemberOfSchema';
 import MemberSchema from './MemberSchema';
 import ParticipatesInSchema from './ParticipatesInSchema';
@@ -30,7 +31,8 @@ const schema = mergeSchemas({
         PhaseSchema,
         ChangeRequestSchema,
         HasRequestedSchema,
-        HasPhaseSchema
+        HasPhaseSchema,
+        IsRelatedSchema
     ]
 });
 

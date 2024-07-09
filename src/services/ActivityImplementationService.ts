@@ -47,7 +47,7 @@ class ActivityImplementationService {
   async getActivityImplementationsByTeam(teamName: string): Promise<{ activityImplementation: ActivityImplementation, assignedUsers: Member[] }[] | null> {
     const session = driver.session();
     try {
-      const result = await session.run(
+      const result = await session.run( 
         `MATCH (t:Team {name: $teamName})-[:PARTICIPATES_IN]->(ap:ActivityProject)-[:INCLUDES]->(ai:ActivityImplementation)
              OPTIONAL MATCH (ai)<-[:IS_ASSIGNED_TO]-(u:Member)
              RETURN ai, collect(u) AS assignedUsers`,
