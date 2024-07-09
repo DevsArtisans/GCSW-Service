@@ -25,7 +25,7 @@ const PhaseSchema = createSchema({
 
     type Query {
       getPhases: [Phase!]
-      getActivityImplementationByPhase(phaseName: String!): [ActivityImplementation!]
+      getActivityImplementationByPhase(phaseName: String!,code: String!): [ActivityImplementation!]
       getActivityImplementationInAllPhases(code: String!): PhasesWithActivityImplementations
     }
 
@@ -38,8 +38,8 @@ const PhaseSchema = createSchema({
       getPhases: async () => {
         return await phaseService.getPhases();
       },
-      getActivityImplementationByPhase: async (_, { phaseName }) => {
-        return await phaseService.getActivityImplementationByPhase(phaseName);
+      getActivityImplementationByPhase: async (_, { phaseName,code }) => {
+        return await phaseService.getActivityImplementationByPhaseAndProject(phaseName, code);
       },
       getActivityImplementationInAllPhases: async (_,{code}) => {
         return await phaseService.getActivityImplementationInAllPhasesByProject(code);

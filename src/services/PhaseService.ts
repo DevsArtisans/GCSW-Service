@@ -27,24 +27,26 @@ class PhaseService {
         }
     }
 
-    async getActivityImplementationByPhase(phaseName: string): Promise<ActivityImplementation[] | null> {
+    async getActivityImplementationByPhaseAndProject(phaseName: string, code: string): Promise<ActivityImplementation[] | null> {
         const session = driver.session();
         try {
             const result = await session.run(
-                `MATCH (p:Phase {name: $phaseName})<-[:IS_ASSIGNED_TO]-(ai:ActivityImplementation)
-         RETURN ai`,
-                { phaseName }
+                `MATCH (pr:ActivityProject {code: $code})-[:HAS_PHASE]->(p:Phase {name: $phaseName})<-[:IS_ASSIGNED_TO]-(ai:ActivityImplementation)
+                 RETURN ai`,
+                { phaseName, code }
             );
-
+    
             if (result.records.length === 0) return null;
-
+    
             return result.records.map(record => record.get(0).properties as ActivityImplementation);
-
         } catch (error) {
-            console.error("Error fetching activity implementation by phase:", error);
+            console.error("Error fetching activity implementation by phase and project:", error);
             return null;
+        } finally {
+            await session.close();
         }
     }
+    
 
     async getActivityImplementationInAllPhasesByProject(code: string): Promise<PhasesWithActivityImplementations | null> {
         const session = driver.session();
