@@ -68,6 +68,24 @@ class ActivityImplementationService {
       await session.close();
     }
   }
+
+  async getActivityImplementationsByMember(email: string): Promise<ActivityImplementation[] | null> {
+    const session = driver.session();
+    try {
+      const result = await session.run(
+        `MATCH (m:Member {email: $email})-[:IS_ASSIGNED_TO]->(ai:ActivityImplementation)
+         RETURN ai`,
+        { email }
+      );
+
+      if (result.records.length === 0) return null;
+
+      return result.records.map(record => record.get('ai').properties as ActivityImplementation);
+    } catch (error) {
+      console.error("Error fetching activity implementations by member:", error);
+      return null;
+    }
+  }
   async getActivityImplementationByCode(code: string): Promise<ActivityImplementation | null> {
     const session = driver.session();
     try {

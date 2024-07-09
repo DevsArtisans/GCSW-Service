@@ -29,6 +29,7 @@ const ActivityImplementationSchema = createSchema({
       getActivityImplementationByCode(code: String!): ActivityImplementation
       getImplementationsByProjectCode(projectCode: String!): [ActivityImplementation]
       getActivityImplementationsByTeam(teamName: String!): [ActivityImplementationWithUsers]
+      getActivityImplementationsByMember(memberEmail: String!): [ActivityImplementation]
     }
 
     type Mutation {
@@ -49,6 +50,9 @@ const ActivityImplementationSchema = createSchema({
     Query: {
       getActivityImplementationByCode: async (_, { code }) => {
         return await activityImplementationService.getActivityImplementationByCode(code);
+      },
+      getActivityImplementationsByMember: async (_, { memberEmail }) => {
+        return await activityImplementationService.getActivityImplementationsByMember(memberEmail);
       },
       getImplementationsByProjectCode: async (_, { projectCode }) => {
         return await activityImplementationService.getImplementationsByProjectCode(projectCode);
