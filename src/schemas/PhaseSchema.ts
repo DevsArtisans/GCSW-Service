@@ -41,9 +41,6 @@ const PhaseSchema = createSchema({
       getActivityImplementationByPhase: async (_, { phaseName,code }) => {
         return await phaseService.getActivityImplementationByPhaseAndProject(phaseName, code);
       },
-      getActivityImplementationInAllPhases: async (_,{code}) => {
-        return await phaseService.getActivityImplementationInAllPhasesByProject(code);
-      },
     },
     Mutation: {
       createPhase: async (_, { name, description, startDate, finalDate }) => {

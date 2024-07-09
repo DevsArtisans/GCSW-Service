@@ -1,5 +1,5 @@
-import type { Team } from "../models/Team";
 import driver from "../config/Neo4j";
+import type { Team } from "../models/Team";
 
 class TeamService {
   async createTeam(team: Team): Promise<Team | null> {
@@ -45,6 +45,7 @@ class TeamService {
       return null;
     }
   }
+
   async getTeams(memberEmail:string): Promise<Team[] | null> {
     const session = driver.session();
     try{

@@ -1,7 +1,6 @@
-import type { ActivityImplementation } from "../models/ActivityImplementation";
 import driver from "../config/Neo4j";
+import type { ActivityImplementation } from "../models/ActivityImplementation";
 import type { Member } from "../models/Member";
-
 class ActivityImplementationService {
 
   async createActivityImplementation(activityImplementation: ActivityImplementation): Promise<ActivityImplementation | null> {
@@ -45,6 +44,30 @@ class ActivityImplementationService {
     }
   }
 
+  async getActivityImplementationsByTeam(teamName: string): Promise<{ activityImplementation: ActivityImplementation, assignedUsers: Member[] }[] | null> {
+    const session = driver.session();
+    try {
+      const result = await session.run(
+        `MATCH (t:Team {name: $teamName})-[:PARTICIPATES_IN]->(ap:ActivityProject)-[:INCLUDES]->(ai:ActivityImplementation)
+             OPTIONAL MATCH (ai)<-[:IS_ASSIGNED_TO]-(u:Member)
+             RETURN ai, collect(u) AS assignedUsers`,
+        { teamName }
+      );
+
+      if (result.records.length === 0) return null;
+
+      return result.records.map(record => {
+        const activityImplementation = record.get('ai').properties as ActivityImplementation;
+        const assignedUsers = record.get('assignedUsers').map((user: any) => user.properties as Member);
+        return { activityImplementation, assignedUsers };
+      });
+    } catch (error) {
+      console.error("Error fetching activity implementations by team:", error);
+      return null;
+    } finally {
+      await session.close();
+    }
+  }
   async getActivityImplementationByCode(code: string): Promise<ActivityImplementation | null> {
     const session = driver.session();
     try {

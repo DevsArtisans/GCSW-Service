@@ -15,11 +15,20 @@ const ActivityImplementationSchema = createSchema({
       startDate: String!
       finalDate: String!
     }
+    type Member {
+      name: String!
+      email: String!
+    }
 
+    type ActivityImplementationWithUsers {
+      activityImplementation: ActivityImplementation!
+      assignedUsers: [Member]!
+    }
 
     type Query {
       getActivityImplementationByCode(code: String!): ActivityImplementation
       getImplementationsByProjectCode(projectCode: String!): [ActivityImplementation]
+      getActivityImplementationsByTeam(teamName: String!): [ActivityImplementationWithUsers]
     }
 
     type Mutation {
@@ -44,6 +53,9 @@ const ActivityImplementationSchema = createSchema({
       getImplementationsByProjectCode: async (_, { projectCode }) => {
         return await activityImplementationService.getImplementationsByProjectCode(projectCode);
       },
+      getActivityImplementationsByTeam: async (_, { teamName }) => {
+        return await activityImplementationService.getActivityImplementationsByTeam(teamName);
+      }
     },
     Mutation: {
       createActivityImplementation: async (_, { code, name, description, status, priority, creationDate, startDate, finalDate }) => {
