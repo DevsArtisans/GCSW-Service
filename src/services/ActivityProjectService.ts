@@ -1,5 +1,5 @@
-import type { ActivityProject } from "../models/ActivityProject";
 import driver from "../config/Neo4j";
+import type { ActivityProject } from "../models/ActivityProject";
 
 class ActivityProjectService {
 
@@ -43,7 +43,27 @@ class ActivityProjectService {
       return null;
     }
   }
+  async deleteActivityProjectByCode(code: string): Promise<boolean> {
+    const session = driver.session();
+    try{
+      await session.run(
+        `MATCH (ap:ActivityProject {code: $code})
+        OPTIONAL MATCH (ap)-[:INCLUDES]->(ai:ActivityImplementation)
+        OPTIONAL MATCH (ai)-[r]-()
+        DELETE ai, r
+        WITH ap
+        OPTIONAL MATCH (ap)-[r]-()
+        DELETE ap, r`,
+        { code }
+      );
 
+      return true;
+    }catch(error){
+      console.error("Error deleting activity project by code:", error);
+      return false;
+    }
+  
+  }
   async getActivityProjectByCode(code: string): Promise<ActivityProject | null> {
     const session = driver.session();
     try {
@@ -62,7 +82,7 @@ class ActivityProjectService {
       return null;
     }
   }
-
+  
   async getProjectsByMemberEmail(memberEmail: string): Promise<ActivityProject[] | null> {
     const session = driver.session();
     try {
